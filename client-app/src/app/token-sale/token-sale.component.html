@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#"><b>My Tokens : </b>{{tokenBalance}} P2P</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#"><b>Balance: </b>{{accountBalance}} ETH</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#"><b>Address : </b>{{accountAddress}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-lg-6">
+      <div class="jumbotron" style="min-height: 520px;">
+          <div clas="row">
+              <div class="col">
+                  <h5 class="text-center"><b>Purchase Tokens</b></h5>
+              </div>
+          </div>
+          <br />
+          <div clas="row">
+              <div class="col">
+                <div *ngIf = "tokenSaleStarted; else showSaleButton">
+                  <div class="row">
+                    <div class="col">
+                        <form [formGroup]="tokenPurchaseForm" (ngSubmit)="onSubmitPurchase(tokenPurchaseForm.value)">
+                            <div class="form-group">
+                                <label>No of Tokens</label>
+                                <input class="form-control" formControlName="NumOfTokens" (focusout)="onFocusOut()" />
+                                <br />
+                                <label>Ethers to be paid</label>
+                                <input class="form-control" formControlName="EtherToBePaid"/>
+                                <br />
+                                <button class="button" type="submit">Purchase</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                </div>
+                <ng-template #showSaleButton>
+                  <div class="row">
+                    <div class="col">
+                      <p>Sale not started yet. If you are admin, you can start the sale.</p>
+                    </div>
+                  </div>
+                  <button (click)="beginSale()">beginSale</button>
+                </ng-template> 
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-lg-6">
+      <div class="jumbotron" style="min-height: 520px;">
+          <div clas="row">
+              <div class="col">
+                  <h5 class="text-center"><b>Transfer Tokens</b></h5>
+              </div>
+          </div>
+          <br />
+          <div class="row">
+              <div class="col">
+                  <form [formGroup]="tokenTransferForm" (ngSubmit)="onSubmit(tokenTransferForm.value)">
+                      <div class="form-group">
+                          <label>To Address</label>
+                          <input class="form-control" formControlName="transferTo"/>
+                          <br />
+                          <label>Number of Tokens</label>
+                          <input class="form-control" formControlName="NumOfTokens"/>
+                          <br />
+                          <button class="button" type="submit">Transfer</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<br />
+
+
+
+
+

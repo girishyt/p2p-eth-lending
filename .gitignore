@@ -1,0 +1,4 @@
+node_modules/
+client-app/node_modules
+client-app/e2e
+build/

@@ -1,0 +1,169 @@
+<div class="row">
+    <div class="col">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#"><b>My Tokens : </b>{{tokenBalance}} P2P</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#"><b>Balance: </b>{{accountBalance}} ETH</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#"><b>Address : </b>{{accountAddress}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <div clas="row" style="min-height: 400px;">
+            <div class="col">
+                <h5 class="text-center"><b>Available Loans</b></h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                #
+                            </th>
+                            <th scope="col">
+                                Amount
+                            </th>
+                            <th scope="col">
+                                Tenure
+                            </th>
+                            <th scope="col">
+                                Interest
+                            </th>
+                            <th scope="col">
+                                Borrow
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let loan of availableLoans">
+                            <td>{{loan.InvestmentNumber}}</td>
+                            <td>{{this.userService.web3.utils.fromWei((loan.InvstAmount).toString(),'ether')}}</td>
+                            <td>{{loan.InvstTenure}}</td>
+                            <td>{{loan.InvestRoi}}</td>
+                            <td>
+                                <button class="button" type="submit" (click)="borrowLoan(loan.Investor,loan.InvestmentNumber)">Borrow</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div clas="row">
+            <div class="col">
+                <h5 class="text-center"><b>My Loans</b></h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                #
+                            </th>
+                            <th scope="col">
+                                Amount
+                            </th>
+                            <th scope="col">
+                                Tenure
+                            </th>
+                            <th scope="col">
+                                Interest
+                            </th>
+                            <th scope="col">
+                                EMI
+                            </th>
+                            <th scope="col">
+                                Paid EMIs
+                            </th>
+                            <th scope="col">
+                                PayEMI
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let loan of myLoans">
+                            <td>{{loan.loanNumber}}</td>
+                            <td>{{this.userService.web3.utils.fromWei((loan.loanAmount).toString(),'ether')}}</td>
+                            <td>{{loan.loanTenure}}</td>
+                            <td>{{loan.loanRoi}}</td>
+                            <td>{{this.userService.web3.utils.fromWei((loan.emiAmount).toString(),'ether')}}</td>
+                            <td>{{loan.paidEmiCount}}</td>
+                            <td>
+                                <span *ngIf = "loan.status==0; else showClosed">
+                                    <button class="button" type="submit" (click)="payEMI(loan.loanNumber,loan.emiAmount)">Pay EMI</button>
+                                </span>
+                                <ng-template #showClosed>
+                                    <span>Closed</span>
+                                </ng-template>
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="row" style="min-height: 400px;">
+            <div class="col">
+                <h5 class="text-center"><b>Add New Investment</b></h5>
+                <form [formGroup]="investorForm" (ngSubmit)="addInvestment(investorForm.value)">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input class="form-control" formControlName="amount"/>
+                        <br />
+                        <label>Tenure</label>
+                        <input class="form-control" formControlName="tenure"/>
+                        <br />
+                        <label>Interest</label>
+                        <input class="form-control" formControlName="interest"/>
+                        <br />
+                        <button class="button" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div clas="row">
+            <div class="col">
+                <h5 class="text-center"><b>My Investments</b></h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                #
+                            </th>
+                            <th scope="col">
+                                Amount
+                            </th>
+                            <th scope="col">
+                                Tenure
+                            </th>
+                            <th scope="col">
+                                Interest
+                            </th>
+                            <th scope="col">
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let investment of myInvestments">
+                            <td>{{investment.InvestmentNumber}}</td>
+                            <td>{{this.userService.web3.utils.fromWei((investment.InvstAmount).toString(),'ether')}}</td>
+                            <td>{{investment.InvstTenure}}</td>
+                            <td>{{investment.InvestRoi}}</td>
+                            <td>
+                                <span *ngIf = "investment.status==0; else showBorrowed">Open</span>
+                                <ng-template #showBorrowed>
+                                    <span>Borrowed</span>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
