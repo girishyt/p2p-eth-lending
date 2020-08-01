@@ -11,3 +11,5 @@ Softwares Used:
 Functionality:
 
 Its a Peer to Peer Lending system where a user can add a loan(Ethers) for others to borrow. Any other users can borrow the loan if they have sufficient P2PTokens. P2PTokens can be purchased from "Token Sale" link in the UI.
+
+Sample Edit
